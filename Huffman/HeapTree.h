@@ -4,7 +4,6 @@
 #include<array>
 #include<string>
 
-
 template <typename T>
 class HeapTree
 {
@@ -13,10 +12,9 @@ private:
 	struct HeapNode
 	{
 		T value;
-		char letter;
 		std::shared_ptr<HeapNode> LeftChild;
 		std::shared_ptr<HeapNode> RightChild;
-		
+
 		bool isLeaf()
 		{
 			return !LeftChild && !RightChild;
@@ -63,18 +61,22 @@ public:
 
 	void Insert(T newValue)
 	{
-		vector.push_back(HeapNode(newValue));
+		//vector.push_back(HeapNode(newValue));
+		vector.emplace_back(newValue);
 		int newIndex = vector.size() - 1;
 		HeapifyUp(newIndex);
+		count++;
 	}
 
 	void HeapifyUp(int index)
 	{
 		while (index != 0)
 		{
-			if (vector[index] > vector[Parent(index)])
+			if (vector[index].value > vector[Parent(index)].value)
 			{
-				Switch(index, Parent(index));
+				//Switch(index, Parent(index));
+				std::swap(vector[index], vector[Parent(index)]);
+				index = Parent(index);
 			}
 			else
 			{
@@ -85,28 +87,69 @@ public:
 
 	T Pop()
 	{
-		T returnValue = vector[0];
+		T returnValue = vector[0].value;
 		vector[0] = vector[vector.size() - 1];
-		vector[vector.size() - 1] = null;
+
+		vector.pop_back();
+		/*vector.erase(vector.begin() + vector.size() - 1);*/
 		HeapifyDown(0);
+		count--;
 		return returnValue;
 	}
 
 	void HeapifyDown(int index)
 	{
+		//int left_child = index * 2 + 1;
+
+		//if (left_child >= vector.size()) return;
+
+		//int potential_index = left_child;
+
+		//int right_child = index * 2 + 2;
+
+		//if (right_child < vector.size() && vector[right_child].value > vector[left_child].value)
+		//{
+		//	potential_index = right_child;
+		//}
+
+		//if (vector[index].value < vector[potential_index].value)
+		//{
+		//	std::swap(vector[index], vector[potential_index]);
+
+		//	HeapifyDown(potential_index);
+		//}
+
+
 		while (LeftChild(index) < vector.size())
 		{
-			bool isLeftBigger = LeftChild(index) > RightChild(index);
+			bool isLeftBigger = true;
+			if (RightChild(index) < vector.size())
+			{
+				isLeftBigger = vector[LeftChild(index)].value > vector[RightChild(index)].value;
+			}
 			if (isLeftBigger)
 			{
-				if (vector[index] < vector[LeftChild(vector)])
+				if (vector[index].value < vector[LeftChild(index)].value)
 				{
-
+					Switch(index, LeftChild(index));
+					index = LeftChild(index);
+				}
+				else
+				{
+					break;
 				}
 			}
 			else
 			{
-
+				if (vector[index].value < vector[RightChild(index)].value)
+				{
+					Switch(index, RightChild(index));
+					index = RightChild(index);
+				}
+				else
+				{
+					break;
+				}
 			}
 		}
 	}
