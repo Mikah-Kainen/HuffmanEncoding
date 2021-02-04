@@ -141,8 +141,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="HeapTree.h" />
+    <ClInclude Include="MyPair.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MyPair.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

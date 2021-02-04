@@ -72,7 +72,7 @@ public:
 	{
 		while (index != 0)
 		{
-			if (vector[index].value > vector[Parent(index)].value)
+			if (vector[index].value < vector[Parent(index)].value)
 			{
 				//Switch(index, Parent(index));
 				std::swap(vector[index], vector[Parent(index)]);
@@ -122,14 +122,14 @@ public:
 
 		while (LeftChild(index) < vector.size())
 		{
-			bool isLeftBigger = true;
+			bool isLeftSmaller = true;
 			if (RightChild(index) < vector.size())
 			{
-				isLeftBigger = vector[LeftChild(index)].value > vector[RightChild(index)].value;
+				isLeftSmaller = vector[LeftChild(index)].value < vector[RightChild(index)].value;
 			}
-			if (isLeftBigger)
+			if (isLeftSmaller)
 			{
-				if (vector[index].value < vector[LeftChild(index)].value)
+				if (vector[index].value > vector[LeftChild(index)].value)
 				{
 					Switch(index, LeftChild(index));
 					index = LeftChild(index);
@@ -141,7 +141,7 @@ public:
 			}
 			else
 			{
-				if (vector[index].value < vector[RightChild(index)].value)
+				if (vector[index].value > vector[RightChild(index)].value)
 				{
 					Switch(index, RightChild(index));
 					index = RightChild(index);

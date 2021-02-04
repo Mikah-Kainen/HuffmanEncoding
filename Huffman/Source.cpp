@@ -4,15 +4,22 @@
 #include<string>
 #include <unordered_map>
 #include"HeapTree.h"
+#include"MyPair.h"
+
+
 
 int main()
 {
 
-	//HeapTree<(int count, char letter)> tree{};
-	//tree.Insert((0, 'A'));
-	//tree.Insert((5, 'B'));
-	//tree.Insert((10, 'C'));
-	//tree.Insert((6, 'D'));
+
+
+	/*HeapTree<int> tree{};*/
+	//tree.Insert(20);
+	//tree.Insert(1);
+	//tree.Insert(0);
+	//tree.Insert(5);
+	//tree.Insert(10);
+	//tree.Insert(6);
 
 	///*int returnval = tree.Pop();
 	//int returnval2 = tree.Pop();*/
@@ -36,20 +43,47 @@ int main()
 
 	//std::pair<int, int> kvp{ 5, 4 };
 
-	std::unordered_map<int, char> dict{};
+	std::unordered_map<char, int> dictionary{};
+	//char letter = 'a';
+	//for (size_t i = 0; i < 10; i++)
+	//{
+	//	dict[i] = letter++;
+	//}
 
-	char letter = 'a';
-	for (size_t i = 0; i < 10; i++)
+	//for (auto mypair : dict)
+	//{
+	//	std::cout << mypair.first << " = " << mypair.second << std::endl;
+	//}
+
+	std::string TestString = "This is the test ittsss";
+	for (char letter : TestString)
 	{
-		dict[i] = letter++;
+		dictionary[letter] ++;
+	}
+	//st ie/hT
+	
+	HeapTree<MyPair<char, int>> tree{};
+	for (std::pair<char, int> pair : dictionary)
+	{
+		tree.Insert(MyPair(pair));
 	}
 
-	for (auto mypair : dict)
+	MyPair<char, int> pair1 = tree.Pop();
+	MyPair<char, int> pair2 = tree.Pop();
+	MyPair<char, int> pair3 {'\0', pair1.value + pair2.value};
+	MyPair<char, int> pair4 = tree.Pop();
+	MyPair<char, int> pair5 {'\0', pair3.value + pair4.value};
+
+	/*
+	func (pair)
 	{
-		std::cout << mypair.first << " = " << mypair.second << std::endl;
+	otherPair = tree.pop
+	newPair = otherPair + pair
+	newPair.leftChild = pair;
+	newPair.RIghtChild = otherPair
+	func(newPair)
 	}
-
-
+	*/
 	return 0;
 }
 
