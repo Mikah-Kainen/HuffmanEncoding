@@ -31,9 +31,13 @@ public:
 		return value > targetPair.value;
 	}
 
-	MyPair<T, Z> operator +(const MyPair<T, Z>& targetPair)
+	MyPair<T, Z> operator+(const MyPair<T, Z>& targetPair)
 	{
 		return MyPair('\0', value + targetPair.value);
 	}
+
+
+	//    Complex operator+( Complex &other );
+
 };
 

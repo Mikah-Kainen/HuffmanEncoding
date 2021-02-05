@@ -25,6 +25,11 @@ public:
 			LeftChild = nullptr;
 			RightChild = nullptr;
 		}
+
+		HeapNode operator+(HeapNode& targetNode)
+		{
+			return HeapNode(value + targetNode.value);
+		}
 	};
 
 	int Parent(int index)
@@ -82,8 +87,8 @@ func(newPair)
 		{
 			currentNode = Pop();
 			newNode = currentNode + oldNode;
-			newNode.LeftChild = std::make_shared<HeapNode>(oldNode);
-			newNode.RightChild = std::make_shared<HeapNode>(newNode);
+			newNode.LeftChild = std::make_shared<HeapNode>(currentNode);
+			newNode.RightChild = std::make_shared<HeapNode>(oldNode);
 			oldNode = newNode;
 		}
 		return newNode;

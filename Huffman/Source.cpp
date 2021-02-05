@@ -6,7 +6,24 @@
 #include"HeapTree.h"
 #include"MyPair.h"
 
+using Node = HeapTree<MyPair<char, int>>::HeapNode;
 
+auto uniqueTraversal(Node targetNode)
+{
+	std::vector<Node> returnVector;
+	Node currentNode = targetNode;
+	while (currentNode.RightChild)
+	{
+		returnVector.push_back(*currentNode.LeftChild);
+		currentNode = *currentNode.RightChild;
+	}
+	returnVector.push_back(currentNode);
+	if (currentNode.LeftChild)
+	{
+		returnVector.push_back(*currentNode.LeftChild);
+	}
+	return returnVector;
+}
 
 int main()
 {
@@ -25,24 +42,6 @@ int main()
 	//int returnval2 = tree.Pop();*/
 
 
-	//while (tree.count != 0)
-	//{
-	//	std::cout << tree.Pop() << std::endl;
-	//}
-
-	/*std::unordered_map<int, int> dict{};
-
-	if (dict.find(5) != dict.end())
-	{
-		std::cout << "found 5" << std::endl;
-	}
-	else
-	{
-		std::cout << "did not find 5" << std::endl;
-	}*/
-
-	//std::pair<int, int> kvp{ 5, 4 };
-
 	std::unordered_map<char, int> dictionary{};
 	//char letter = 'a';
 	//for (size_t i = 0; i < 10; i++)
@@ -55,7 +54,35 @@ int main()
 	//	std::cout << mypair.first << " = " << mypair.second << std::endl;
 	//}
 
-	std::string TestString = "This is the test ittsss";
+	/*std::string TestString = "This is the test ittsss";*/
+	std::string TestString;
+	for (size_t i = 0; i < 120; i ++)
+	{
+
+		TestString += 'E';
+	}
+	for (size_t i = 0; i < 37; i++)
+	{
+
+		TestString += 'U';
+	}
+	for (size_t i = 0; i < 42; i++)
+	{
+
+		TestString += 'D';
+		TestString += 'L';
+	}
+	for (size_t i = 0; i < 32; i++)
+	{
+
+		TestString += 'C';
+	}
+	for (size_t i = 0; i < 24; i++)
+	{
+
+		TestString += 'M';
+	}
+	TestString += "ZZKKKKKKK";
 	for (char letter : TestString)
 	{
 		dictionary[letter] ++;
@@ -68,13 +95,20 @@ int main()
 		tree.Insert(MyPair<char, int>(pair));
 	}
 
-	MyPair<char, int> pair1 = tree.Pop();
-	MyPair<char, int> pair2 = tree.Pop();
-	MyPair<char, int> pair3 {'\0', pair1.value + pair2.value};
-	MyPair<char, int> pair4 = tree.Pop();
-	MyPair<char, int> pair5 {'\0', pair3.value + pair4.value};
 
-	tree.BuildTree();
+	HeapTree<MyPair<char, int>>::HeapNode newTree = tree.BuildTree();
+
+	std::unordered_map<char, int> charToInt{};
+	std::unordered_map<int, char> intToChar{};
+
+	auto resultNode = uniqueTraversal(newTree);
+	std::vector<std::string> resultInt{};
+	resultInt.push_back("0");
+	for (int i = 1; i < resultNode.size(); i++)
+	{
+//		resultInt.push_back();
+	}
+
 	return 0;
 }
 
