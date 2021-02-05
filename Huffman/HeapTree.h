@@ -7,7 +7,7 @@
 template <typename T>
 class HeapTree
 {
-private:
+public:
 
 	struct HeapNode
 	{
@@ -58,6 +58,36 @@ private:
 
 public:
 	int count = {};
+
+	HeapNode BuildTree()
+	{
+		if (count == 0)
+		{
+			throw;
+		}
+		/*
+func (pair)
+{
+otherPair = tree.pop
+newPair = otherPair + pair
+newPair.leftChild = pair;
+newPair.RIghtChild = otherPair
+func(newPair)
+}
+*/
+		HeapNode oldNode = Pop();
+		HeapNode currentNode = oldNode;
+		HeapNode newNode = oldNode;
+		while (count > 0)
+		{
+			currentNode = Pop();
+			newNode = currentNode + oldNode;
+			newNode.LeftChild = std::make_shared<HeapNode>(oldNode);
+			newNode.RightChild = std::make_shared<HeapNode>(newNode);
+			oldNode = newNode;
+		}
+		return newNode;
+	}
 
 	void Insert(T newValue)
 	{

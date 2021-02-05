@@ -65,7 +65,7 @@ int main()
 	HeapTree<MyPair<char, int>> tree{};
 	for (std::pair<char, int> pair : dictionary)
 	{
-		tree.Insert(MyPair(pair));
+		tree.Insert(MyPair<char, int>(pair));
 	}
 
 	MyPair<char, int> pair1 = tree.Pop();
@@ -74,16 +74,7 @@ int main()
 	MyPair<char, int> pair4 = tree.Pop();
 	MyPair<char, int> pair5 {'\0', pair3.value + pair4.value};
 
-	/*
-	func (pair)
-	{
-	otherPair = tree.pop
-	newPair = otherPair + pair
-	newPair.leftChild = pair;
-	newPair.RIghtChild = otherPair
-	func(newPair)
-	}
-	*/
+	tree.BuildTree();
 	return 0;
 }
 

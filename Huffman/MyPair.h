@@ -30,5 +30,10 @@ public:
 	{
 		return value > targetPair.value;
 	}
+
+	MyPair<T, Z> operator +(const MyPair<T, Z>& targetPair)
+	{
+		return MyPair('\0', value + targetPair.value);
+	}
 };
 
