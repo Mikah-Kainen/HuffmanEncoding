@@ -8,7 +8,7 @@
 
 using Node = HeapTree<MyPair<char, int>>::HeapNode;
 
-auto uniqueTraversal(Node targetNode)
+std::vector<Node> uniqueTraversal(Node targetNode)
 {
 	std::vector<Node> returnVector;
 	Node currentNode = targetNode;
@@ -101,12 +101,19 @@ int main()
 	std::unordered_map<char, int> charToInt{};
 	std::unordered_map<int, char> intToChar{};
 
-	auto resultNode = uniqueTraversal(newTree);
+	std::vector<Node> resultNode = uniqueTraversal(newTree);
 	std::vector<std::string> resultInt{};
 	resultInt.push_back("0");
 	for (int i = 1; i < resultNode.size(); i++)
 	{
-//		resultInt.push_back();
+		if (resultInt[i - 1][resultInt[i-1].size() - 1] == '0')
+		{
+			resultInt.push_back(resultInt[i-1] + '1');
+		}
+		else
+		{
+			resultInt.push_back(resultInt[i - 1] + '0');
+		}
 	}
 
 	return 0;
