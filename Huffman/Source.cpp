@@ -8,23 +8,33 @@
 
 using Node = HeapTree<MyPair<char, int>>::HeapNode;
 
-std::vector<Node> uniqueTraversal(Node targetNode)
+std::unordered_map<char, std::string> uniqueTraversal(Node targetNode)
 {
-	std::vector<Node> returnVector;
+	std::unordered_map<char, std::string> returnVector;
 	Node currentNode = targetNode;
 	while (currentNode.RightChild)
 	{
-		returnVector.push_back(*currentNode.LeftChild);
+		returnVector.emplace(currentNode.LeftChild->value.key, returnVector[currentNode.value.key] + '0');
+		returnVector[currentNode.value.key] += '1';
 		currentNode = *currentNode.RightChild;
 	}
-	returnVector.push_back(currentNode);
 	if (currentNode.LeftChild)
 	{
-		returnVector.push_back(*currentNode.LeftChild);
+		returnVector.emplace(currentNode.LeftChild->value.key, returnVector[currentNode.value.key] + '0');
 	}
 	return returnVector;
 }
 
+ template<typename T, typename Z>
+std::unordered_map<Z, T> invertDictionary(std::unordered_map<T, Z> targetMap)
+{
+	std::unordered_map<Z, T> returnMap{};
+	for (std::pair<T, Z> pair : targetMap)
+	{
+		returnMap.emplace(pair.second, pair.first);
+	}
+	return returnMap;
+}
 int main()
 {
 
@@ -98,23 +108,8 @@ int main()
 
 	HeapTree<MyPair<char, int>>::HeapNode newTree = tree.BuildTree();
 
-	std::unordered_map<char, int> charToInt{};
-	std::unordered_map<int, char> intToChar{};
-
-	std::vector<Node> resultNode = uniqueTraversal(newTree);
-	std::vector<std::string> resultInt{};
-	resultInt.push_back("0");
-	for (int i = 1; i < resultNode.size(); i++)
-	{
-		if (resultInt[i - 1][resultInt[i-1].size() - 1] == '0')
-		{
-			resultInt.push_back(resultInt[i-1] + '1');
-		}
-		else
-		{
-			resultInt.push_back(resultInt[i - 1] + '0');
-		}
-	}
+	std::unordered_map<char, std::string> charToString = uniqueTraversal(newTree);
+	std::unordered_map<std::string, char> stringToChar = invertDictionary<char, std::string>(charToString);
 
 	return 0;
 }
