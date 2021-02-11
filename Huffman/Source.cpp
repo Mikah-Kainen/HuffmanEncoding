@@ -12,16 +12,19 @@ std::unordered_map<char, std::string> uniqueTraversal(Node targetNode)
 {
 	std::unordered_map<char, std::string> returnVector;
 	Node currentNode = targetNode;
+	std::string last;
 	while (currentNode.RightChild)
 	{
+		last += '1';
 		returnVector.emplace(currentNode.LeftChild->value.key, returnVector[currentNode.value.key] + '0');
 		returnVector[currentNode.value.key] += '1';
 		currentNode = *currentNode.RightChild;
 	}
 	if (currentNode.LeftChild)
 	{
-		returnVector.emplace(currentNode.LeftChild->value.key, returnVector[currentNode.value.key] + '0');
+		returnVector.emplace(currentNode.LeftChild->value.key, last + '0');
 	}
+	returnVector.emplace(currentNode.value.key, last + '1' + '0');
 	return returnVector;
 }
 
@@ -65,8 +68,8 @@ int main()
 	//}
 
 	/*std::string TestString = "This is the test ittsss";*/
-	std::string TestString;
-	for (size_t i = 0; i < 120; i ++)
+	std::string TestString = "This is a test message that I am making up as I type. Hopefuly, my program will work and this message will be decoded. If it doesn't that would be sad but I would make sure to promptly fix it!";
+	/*for (size_t i = 0; i < 120; i ++)
 	{
 
 		TestString += 'E';
@@ -92,7 +95,7 @@ int main()
 
 		TestString += 'M';
 	}
-	TestString += "ZZKKKKKKK";
+	TestString += "ZZKKKKKKK";*/
 	for (char letter : TestString)
 	{
 		dictionary[letter] ++;
@@ -111,6 +114,22 @@ int main()
 	std::unordered_map<char, std::string> charToString = uniqueTraversal(newTree);
 	std::unordered_map<std::string, char> stringToChar = invertDictionary<char, std::string>(charToString);
 
+	std::string compressedString;
+	for (char letter : TestString)
+	{
+		compressedString += charToString[letter];
+	}
+	std::string tempHolder;
+	std::string resultString;
+	for (char letter : compressedString)
+	{
+		tempHolder += letter;
+		if (letter == '0')
+		{
+			resultString += stringToChar[tempHolder];
+			tempHolder = "";
+		}
+	}
 	return 0;
 }
 
