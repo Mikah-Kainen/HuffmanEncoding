@@ -28,7 +28,7 @@ std::unordered_map<char, std::string> uniqueTraversal(Node targetNode)
 	return returnVector;
 }
 
- template<typename T, typename Z>
+template<typename T, typename Z>
 std::unordered_map<Z, T> invertDictionary(std::unordered_map<T, Z> targetMap)
 {
 	std::unordered_map<Z, T> returnMap{};
@@ -38,6 +38,43 @@ std::unordered_map<Z, T> invertDictionary(std::unordered_map<T, Z> targetMap)
 	}
 	return returnMap;
 }
+
+
+std::string IntToString(std::string intValues)
+{
+	int length = intValues.size();
+	int extra = length % 8;
+
+	std::vector<std::byte> byteValues{};
+	for (int i = 0; i < length / 8; i++)
+	{
+		std::byte b = (std::byte)0;
+		byteValues.push_back(b);
+
+		for (int x = 0; x < 8; x++)
+		{
+			byteValues[i] |= (std::byte)((int)intValues[8 * i + x] - 48) << (8 - x - 1);
+		}
+	}
+
+	std::string returnString;
+	for (std::byte newChar : byteValues)
+	{
+		returnString += (char)newChar;
+	}
+
+	returnString.append(std::to_string(extra));
+	std::byte lastByte;
+	for (int x = 0; x < extra; x++)
+	{
+		lastByte |= (std::byte)((int)intValues[length - extra + x] - 48) << (8 - x - 1);
+	}
+
+	returnString += (char)lastByte;
+	return returnString;
+}
+
+
 int main()
 {
 
@@ -101,7 +138,7 @@ int main()
 		dictionary[letter] ++;
 	}
 	//st ie/hT
-	
+
 	HeapTree<MyPair<char, int>> tree{};
 	for (std::pair<char, int> pair : dictionary)
 	{
@@ -119,6 +156,11 @@ int main()
 	{
 		compressedString += charToString[letter];
 	}
+
+	std::cout << IntToString(compressedString) << std::endl;
+
+	//REad the bytes and turn back into string
+
 	std::string tempHolder;
 	std::string resultString;
 	for (char letter : compressedString)
@@ -131,6 +173,7 @@ int main()
 		}
 	}
 	return 0;
+
 }
 
 
