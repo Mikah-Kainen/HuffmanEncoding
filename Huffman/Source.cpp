@@ -74,6 +74,35 @@ std::string IntToString(std::string intValues)
 	return returnString;
 }
 
+int DecToBin(int decimalValue)
+{
+	int binaryValue = 5;
+
+	return binaryValue;
+}
+
+std::string StringToInt(std::string stringValues)
+{
+	std::string intValues{};
+	int length = stringValues.length();
+
+	for (int i = 0; i < length - 2; i ++)
+	{
+		for (int x = 0; x < 8; x ++)
+		{
+			intValues.append(std::to_string(DecToBin((int)stringValues[i]) >> (7 - x)));
+		}
+	}
+
+
+	for (int i = 0; i < stringValues[length - 2]; i ++)
+	{
+		intValues.append(std::to_string(DecToBin((int)stringValues[length - 2]) >> (7 - i)));
+	}
+	return intValues;
+}
+
+
 
 int main()
 {
@@ -157,21 +186,25 @@ int main()
 		compressedString += charToString[letter];
 	}
 
-	std::cout << IntToString(compressedString) << std::endl;
-
+	std::string displayString = IntToString(compressedString);
+	std::cout << displayString << std::endl;
 	//REad the bytes and turn back into string
 
-	std::string tempHolder;
-	std::string resultString;
-	for (char letter : compressedString)
-	{
-		tempHolder += letter;
-		if (letter == '0')
-		{
-			resultString += stringToChar[tempHolder];
-			tempHolder = "";
-		}
-	}
+	//std::string newCompressedString = StringToInt(displayString);
+
+	//std::string tempHolder;
+	//std::string resultString;
+	//for (char letter : newCompressedString)
+	//{
+	//	tempHolder += letter;
+	//	if (letter == '0')
+	//	{
+	//		resultString += stringToChar[tempHolder];
+	//		tempHolder = "";
+	//	}
+	//}
+
+	int test = 100000 >> 5;
 	return 0;
 
 }
