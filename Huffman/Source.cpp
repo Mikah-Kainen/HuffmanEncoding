@@ -74,9 +74,89 @@ std::string IntToString(std::string intValues)
 	return returnString;
 }
 
-int DecToBin(int decimalValue)
+std::string DecToBin(int decimalValue)
 {
-	int binaryValue = 5;
+	std::string binaryValue{};
+	// 1, 2, 4, 8  16, 32, 64, 128
+	if (decimalValue >= 128)
+	{
+		binaryValue += '1';
+		decimalValue -= 128;
+	}
+	else
+	{
+		binaryValue += '0';
+	}
+
+	if (decimalValue >= 64)
+	{
+		binaryValue += '1';
+		decimalValue -= 64;
+	}
+	else
+	{
+		binaryValue += '0';
+	}
+
+	if (decimalValue >= 32)
+	{
+		binaryValue += '1';
+		decimalValue -= 32;
+	}
+	else
+	{
+		binaryValue += '0';
+	}
+
+	if (decimalValue >= 16)
+	{
+		binaryValue += '1';
+		decimalValue -= 16;
+	}
+	else
+	{
+		binaryValue += '0';
+	}
+
+	if (decimalValue >= 8)
+	{
+		binaryValue += '1';
+		decimalValue -= 8;
+	}
+	else
+	{
+		binaryValue += '0';
+	}
+
+	if (decimalValue >= 4)
+	{
+		binaryValue += '1';
+		decimalValue -= 4;
+	}
+	else
+	{
+		binaryValue += '0';
+	}
+
+	if (decimalValue >= 2)
+	{
+		binaryValue += '1';
+		decimalValue -= 2;
+	}
+	else
+	{
+		binaryValue += '0';
+	}
+
+	if (decimalValue >= 1)
+	{
+		binaryValue += '1';
+		decimalValue -= 1;
+	}
+	else
+	{
+		binaryValue += '0';
+	}
 
 	return binaryValue;
 }
@@ -90,14 +170,14 @@ std::string StringToInt(std::string stringValues)
 	{
 		for (int x = 0; x < 8; x ++)
 		{
-			intValues.append(std::to_string(DecToBin((int)stringValues[i]) >> (7 - x)));
+			intValues.append(DecToBin((int)stringValues[i])[7 - x]);
 		}
 	}
 
 
 	for (int i = 0; i < stringValues[length - 2]; i ++)
 	{
-		intValues.append(std::to_string(DecToBin((int)stringValues[length - 2]) >> (7 - i)));
+		intValues.append(DecToBin((int)stringValues[length - 2])[7 - i]);
 	}
 	return intValues;
 }
