@@ -22,9 +22,9 @@ std::unordered_map<char, std::string> uniqueTraversal(Node targetNode)
 	}
 	if (currentNode.LeftChild)
 	{
-		returnVector.emplace(currentNode.LeftChild->value.key, last + '0');
+		returnVector.emplace(currentNode.LeftChild->value.key, last + '1' + '0');
 	}
-	returnVector.emplace(currentNode.value.key, last + '1' + '0');
+	returnVector.emplace(currentNode.value.key, last + '0');
 	return returnVector;
 }
 
@@ -64,13 +64,14 @@ std::string IntToString(std::string intValues)
 	}
 
 	returnString.append(std::to_string(extra));
-	std::byte lastByte;
+	std::byte lastByte = (std::byte)0;
 	for (int x = 0; x < extra; x++)
 	{
 		lastByte |= (std::byte)((int)intValues[length - extra + x] - 48) << (8 - x - 1);
 	}
 
 	returnString += (char)lastByte;
+
 	return returnString;
 }
 
@@ -166,18 +167,30 @@ std::string StringToInt(std::string stringValues)
 	std::string intValues{};
 	int length = stringValues.length();
 
-	for (int i = 0; i < length - 2; i ++)
+	for (int i = 0; i < length - 2; i++)
 	{
-		for (int x = 0; x < 8; x ++)
+		for (int x = 0; x < 8; x++)
 		{
-			intValues.append(DecToBin((int)stringValues[i])[7 - x]);
+			int temp = (int)stringValues[i];
+			if (temp < 0)
+			{
+				temp = temp + 256;
+			}
+			auto t = DecToBin(temp)[x];
+
+			intValues += t;
 		}
 	}
 
 
-	for (int i = 0; i < stringValues[length - 2]; i ++)
+	for (int i = 0; i < (int)stringValues[length - 2] - 48; i++)
 	{
-		intValues.append(DecToBin((int)stringValues[length - 2])[7 - i]);
+		int temp = (int)stringValues[length - 1];
+		if (temp < 0)
+		{
+			temp = temp + 256;
+		}
+		intValues += DecToBin(temp)[i];
 	}
 	return intValues;
 }
@@ -214,7 +227,7 @@ int main()
 	//}
 
 	/*std::string TestString = "This is the test ittsss";*/
-	std::string TestString = "This is a test message that I am making up as I type. Hopefuly, my program will work and this message will be decoded. If it doesn't that would be sad but I would make sure to promptly fix it!";
+	std::string TestString = "This is a test message that I am making up as I type. Hopefuly, my program will work and this message will be decoded. If it doesn't that would be sad but I would make sure to promptly fix it!Y";
 	/*for (size_t i = 0; i < 120; i ++)
 	{
 
@@ -270,21 +283,22 @@ int main()
 	std::cout << displayString << std::endl;
 	//REad the bytes and turn back into string
 
-	//std::string newCompressedString = StringToInt(displayString);
+	std::string newCompressedString = StringToInt(displayString);
 
-	//std::string tempHolder;
-	//std::string resultString;
-	//for (char letter : newCompressedString)
-	//{
-	//	tempHolder += letter;
-	//	if (letter == '0')
-	//	{
-	//		resultString += stringToChar[tempHolder];
-	//		tempHolder = "";
-	//	}
-	//}
+	std::string tempHolder;
+	std::string resultString;
+	for (char letter : newCompressedString)
+	{
+		tempHolder += letter;
+		if (letter == '0')
+		{
+			resultString += stringToChar[tempHolder];
+			tempHolder = "";
+		}
+	}
 
-	int test = 100000 >> 5;
+	std::cout << resultString;
+
 	return 0;
 
 }
